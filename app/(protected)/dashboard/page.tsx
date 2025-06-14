@@ -3,7 +3,7 @@ import { DataTable } from '@/components/sidebar/data-table'
 import { SectionCards } from '@/components/sidebar/section-cards'
 import data from './data.json'
 
-const Page = () => {
+const Page = async () => {
   return (
     <div className="flex flex-1 flex-col">
       <div className="@container/main flex flex-1 flex-col gap-2">
