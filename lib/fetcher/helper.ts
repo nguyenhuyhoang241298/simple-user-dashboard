@@ -1,7 +1,8 @@
+import env from '@/env'
 import { GetUrlOptions } from './type'
 
 export const getUrl = ({
-  baseUrl = process.env.NEXT_PUBLIC_API_ENDPOINT ?? '',
+  baseUrl = env.NEXT_PUBLIC_API_ENDPOINT ?? '',
   path = '',
   params = {},
 }: GetUrlOptions) => {
