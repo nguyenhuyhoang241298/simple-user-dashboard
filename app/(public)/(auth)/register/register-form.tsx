@@ -10,10 +10,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { signIn } from '@/lib/auth/auth-client'
+import { signUp } from '@/lib/auth/auth-client'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -21,36 +22,41 @@ import { z } from 'zod'
 export const signInSchema = z.object({
   email: z.string().email({ message: 'Email không hợp lệ' }),
   password: z.string().min(1, { message: 'Vui lòng nhập mật khẩu' }),
+  name: z.string().min(1, { message: 'Vui lòng nhập tên' }),
 })
 
 type FormData = z.infer<typeof signInSchema>
 
-export function LoginForm({
+export function RegisterForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'form'>) {
+  const router = useRouter()
+
   const form = useForm<FormData>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
       password: '',
+      name: '',
     },
   })
 
   const loginMutation = useMutation({
     mutationFn: (formData: FormData) => {
-      return signIn.email(
+      return signUp.email(
         {
           email: formData.email,
           password: formData.password,
-          callbackURL: '/dashboard',
+          name: formData.name,
         },
         {
           onSuccess: () => {
-            toast.success('Đăng nhập thành công')
+            toast.success('Đăng ký thành công')
+            router.push('/login')
           },
           onError: () => {
-            toast.warning('Vui lòng kiểm tra lại tài khoản hoặc mật khẩu')
+            toast.warning('Xin lỗi, đã có lỗi xảy ra trong quá trình đăng ký')
           },
         },
       )
@@ -69,11 +75,26 @@ export function LoginForm({
         {...props}
       >
         <div className="flex flex-col items-center gap-2 text-center">
-          <h1 className="text-2xl font-bold">Đăng nhập vào tài khoản</h1>
+          <h1 className="text-2xl font-bold">Tạo mới tài khoản</h1>
           <p className="text-balance text-sm text-muted-foreground">
-            Nhập email và mật khẩu của bạn để tiếp tục
+            Vui lòng nhập thông tin tài khoản để đăng ký. Sau khi đăng ký, bạn
+            có thể đăng nhập và sử dụng các tính năng của hệ thống.
           </p>
         </div>
+
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Tên</FormLabel>
+              <FormControl>
+                <Input placeholder="Tên đăng nhập" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -109,7 +130,7 @@ export function LoginForm({
           type="submit"
           className="w-full"
         >
-          Đăng nhập
+          Đăng ký
         </Button>
       </form>
     </Form>

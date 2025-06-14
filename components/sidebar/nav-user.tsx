@@ -24,11 +24,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { signOut, useSession } from '@/lib/auth/auth-client'
+import { useRouter } from 'next/navigation'
 import { mockUser } from './configs'
 
 export function NavUser() {
+  const router = useRouter()
   const { isMobile } = useSidebar()
-  const user = mockUser
+  const session = useSession()
 
   return (
     <SidebarMenu>
@@ -40,13 +43,15 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent cursor-pointer data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={mockUser.avatar} alt={'avatar'} />
                 <AvatarFallback className="rounded-lg">Onus</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">
+                  {session.data?.user.name}
+                </span>
                 <span className="truncate text-xs text-muted-foreground">
-                  {user.email}
+                  {session.data?.user.email}
                 </span>
               </div>
               <MoreVerticalIcon className="ml-auto size-4" />
@@ -61,13 +66,15 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={mockUser.avatar} alt={'avatar'} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium">
+                    {session.data?.user.name}
+                  </span>
                   <span className="truncate text-xs text-muted-foreground">
-                    {user.email}
+                    {session.data?.user.email}
                   </span>
                 </div>
               </div>
@@ -89,13 +96,19 @@ export function NavUser() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => {
-                // Handle logout logic here
+              onClick={async () => {
+                await signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      router.push('/login')
+                    },
+                  },
+                })
               }}
               className="cursor-pointer"
             >
               <LogOutIcon />
-              Log out
+              Đăng xuất
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

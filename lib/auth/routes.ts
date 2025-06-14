@@ -6,7 +6,7 @@ export const publicRoutes = [
   '/test-query',
 ]
 
-export const authRoutes = ['/login']
+export const authRoutes = ['/login', '/register']
 
 export const apiAuthPrefix = '/api/auth'
 

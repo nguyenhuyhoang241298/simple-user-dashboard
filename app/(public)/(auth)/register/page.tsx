@@ -2,9 +2,9 @@ import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spot-light'
 import { GalleryVerticalEnd } from 'lucide-react'
 import Link from 'next/link'
-import { LoginForm } from './login-form'
+import { RegisterForm } from './register-form'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -18,12 +18,12 @@ export default function LoginPage() {
         </div>
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs flex flex-col gap-3">
-            <LoginForm />
+            <RegisterForm />
             <Link
-              href="/register"
+              href="/login"
               className="text-sm text-muted-foreground text-center mt-2 hover:underline"
             >
-              Chưa có tài khoản? Đăng ký
+              Đã có tài khoản? Đăng nhập
             </Link>
           </div>
         </div>
