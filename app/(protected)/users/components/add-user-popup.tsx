@@ -81,7 +81,7 @@ export function AddUserPopup() {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="h-8">
           <PlusCircle className="mr-2 h-4 w-4" />
