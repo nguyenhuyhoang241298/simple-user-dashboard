@@ -12,6 +12,7 @@ import {
   ListIcon,
   SearchIcon,
   SettingsIcon,
+  User,
   UsersIcon,
 } from 'lucide-react'
 
@@ -46,6 +47,11 @@ export const navMain = [
     title: 'Team',
     url: '#',
     icon: UsersIcon,
+  },
+  {
+    title: 'Users',
+    url: '/users',
+    icon: User,
   },
 ]
 
