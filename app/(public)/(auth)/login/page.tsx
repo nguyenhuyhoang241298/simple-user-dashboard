@@ -3,6 +3,7 @@ import { Spotlight } from '@/components/ui/spot-light'
 import { GalleryVerticalEnd } from 'lucide-react'
 import Link from 'next/link'
 import { LoginForm } from './login-form'
+import SocialLogin from './social-login'
 
 export default function LoginPage() {
   return (
@@ -19,6 +20,7 @@ export default function LoginPage() {
         <div className="flex flex-1 items-center justify-center">
           <div className="w-full max-w-xs flex flex-col gap-3">
             <LoginForm />
+            <SocialLogin />
             <Link
               href="/register"
               className="text-sm text-muted-foreground text-center mt-2 hover:underline"
